@@ -13,7 +13,7 @@ steps:
     command: 'restore'
     projects: '**/*.csproj'
     feedsToUse: 'config'
-    nugetConfigPath: '$(Build.SourcesDirectory)\src\NuGEt.config'
+    nugetConfigPath: '$(Build.SourcesDirectory)\src\NuGet.config'
     restoreDirectory: '$(Build.SourcesDirectory)\src\packages'
 
 ## Build
