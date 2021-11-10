@@ -43,11 +43,18 @@ steps:
 - template: copy-and-publish-powershell.yml
 
 ## Run Unit Tests
+# - template: run-unittests.yml
+#   parameters:
+#     name: WinGet.RestSource.UnitTest
+#     source: '$(Build.SourcesDirectory)\src\WinGet.RestSource.UnitTest\bin\$(BuildConfiguration)\netcoreapp3.1'
+#     dll: Microsoft.WinGet.RestSource.UnitTest.dll
+
+## Run Integration Tests
 - template: run-unittests.yml
   parameters:
     name: WinGet.RestSource.UnitTest
-    source: '$(Build.SourcesDirectory)\src\WinGet.RestSource.UnitTest\bin\$(BuildConfiguration)\netcoreapp3.1'
-    dll: Microsoft.WinGet.RestSource.UnitTest.dll
+    source: '$(Build.SourcesDirectory)\src\WinGet.RestSource.IntegrationTest\bin\$(BuildConfiguration)\netcoreapp6.0'
+    dll: Microsoft.WinGet.RestSource.IntegrationTest.dll
 
 ## Component Governance
 - task: ComponentGovernanceComponentDetection@0
