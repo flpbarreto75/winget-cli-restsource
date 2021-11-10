@@ -9,7 +9,7 @@ parameters:
 steps:
 - powershell: |
     # Copy and rename Test.runsettings.template.json to Test.runsettings.json to be used as test config
-    copy "$(Build.SourcesDirectory)\src\WinGet.RestSource.UnitTest\Test.runsettings.template.json" "${{ parameters.source }}\Test.runsettings.json"
+    copy "$(Build.SourcesDirectory)\src\WinGet.RestSource.IntegrationTest\Test.runsettings.template.json" "${{ parameters.source }}\Test.runsettings.json"
 
     # Install Winget
     iwr https://github.com/microsoft/winget-cli/releases/download/v1.1.12653/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -OutFile Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
