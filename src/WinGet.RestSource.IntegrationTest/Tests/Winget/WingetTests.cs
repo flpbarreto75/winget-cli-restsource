@@ -53,13 +53,13 @@ namespace Microsoft.WinGet.RestSource.IntegrationTest.Winget
         /// <inheritdoc/>
         public async Task InitializeAsync()
         {
-            //await AddSource();
+            await AddSource();
         }
 
         /// <inheritdoc/>
         public async Task DisposeAsync()
         {
-            //await RemoveSource();
+            await RemoveSource();
         }
 
         [Fact]
