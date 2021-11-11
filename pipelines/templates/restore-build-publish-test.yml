@@ -42,17 +42,12 @@ steps:
 # Publish powershell
 - template: copy-and-publish-powershell.yml
 
-- task: VisualStudioTestPlatformInstaller@1
-  inputs:
-    packageFeedSelector: nugetOrg
-    versionSelector: latestPreRelease
-
-# Run Unit Tests
-- template: run-unittests.yml
-  parameters:
-    name: WinGet.RestSource.UnitTest
-    source: '$(Build.SourcesDirectory)\src\WinGet.RestSource.UnitTest\bin\$(BuildConfiguration)\netcoreapp3.1'
-    dll: Microsoft.WinGet.RestSource.UnitTest.dll
+# # Run Unit Tests
+# - template: run-unittests.yml
+#   parameters:
+#     name: WinGet.RestSource.UnitTest
+#     source: '$(Build.SourcesDirectory)\src\WinGet.RestSource.UnitTest\bin\$(BuildConfiguration)\netcoreapp3.1'
+#     dll: Microsoft.WinGet.RestSource.UnitTest.dll
 
 ## Run Integration Tests
 - template: run-integrationtests.yml
