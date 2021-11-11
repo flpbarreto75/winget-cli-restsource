@@ -16,17 +16,7 @@ steps:
     iwr https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx -OutFile Microsoft.VCLibs.x64.14.00.Desktop.appx
     iwr https://github.com/microsoft/winget-cli/releases/download/v1.1.12653/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -OutFile Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
     Add-AppxProvisionedPackage -Online -PackagePath .\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -DependencyPackagePath .\Microsoft.VCLibs.x64.14.00.Desktop.appx -SkipLicense
-    
-    # Winget isn't immediately available after Add-AppxProvisionedPackage completes, loop until it's ready
-    do {
-      try {
-        winget | Out-Null
-        $ready = $true
-      } catch {
-        "Winget not yet available"
-      }
-    } while (!$ready)
-
+    Add-AppxPackage .\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
     winget source add -n "winget-pkgs-restsource" -a https://azfun-pkgsrest-api-centus-test.azurewebsites.net/api/ -t "Microsoft.Rest"
   displayName: "Setup test pre-requisites"
 
