@@ -12,12 +12,20 @@ steps:
     copy "$(Build.SourcesDirectory)\src\WinGet.RestSource.IntegrationTest\Test.runsettings.template.json" "${{ parameters.source }}\Test.runsettings.json"
 
     # Install Winget
+    $ProgressPreference = 'SilentlyContinue'
     iwr https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx -OutFile Microsoft.VCLibs.x64.14.00.Desktop.appx
-    iwr https://github.com/microsoft/winget-cli/releases/download/v1.1.12653/9c0fe2ce7f8e410eb4a8f417de74517e_License1.xml license.xml
     iwr https://github.com/microsoft/winget-cli/releases/download/v1.1.12653/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -OutFile Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
-    Add-AppxPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -DependencyPath Microsoft.VCLibs.x64.14.00.Desktop.appx -LicensePath license.xml
-
-    winget
+    Add-AppxProvisionedPackage -Online -PackagePath .\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -DependencyPackagePath .\Microsoft.VCLibs.x64.14.00.Desktop.appx -SkipLicense
+    
+    # Winget isn't immediately available after Add-AppxProvisionedPackage completes, loop until it's ready
+    do {
+      try {
+        winget | Out-Null
+        $ready = $true
+      } catch {
+        "Winget not yet available"
+      }
+    } while (!$ready)
 
     winget source add -n "winget-pkgs-restsource" -a https://azfun-pkgsrest-api-centus-test.azurewebsites.net/api/ -t "Microsoft.Rest"
   displayName: "Setup test pre-requisites"
