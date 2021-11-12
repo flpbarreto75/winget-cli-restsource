@@ -24,7 +24,7 @@ steps:
     publishTestResults: true
     projects: '$(Build.SourcesDirectory)\src\WinGet.RestSource.UnitTest\*.csproj'
   env:
-    CosmosAccountEndpoint: "$(CosmosDbEmulator.Endpoint)"
+    CosmosAccountEndpoint: $(CosmosDbEmulator.Endpoint)
 
 # - task: CopyFiles@2
 #   displayName: 'Copy Files: ${{ parameters.name }}'
