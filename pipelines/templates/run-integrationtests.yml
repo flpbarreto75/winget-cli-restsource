@@ -7,6 +7,15 @@ parameters:
   source: ''
 
 steps:
+- task: DownloadGitHubRelease@0
+  inputs:
+    connection: Microsoft
+    userRepository: microsoft\winget-cli
+    defaultVersionType: 'latest'
+    itemPattern: Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
+    downloadPath: '$(System.ArtifactsDirectory)' 
+  displayName: Download latest Winget release
+
 - powershell: |
     # Copy and rename Test.runsettings.template.json to Test.runsettings.json to be used as test config
     copy "$(Build.SourcesDirectory)\src\WinGet.RestSource.IntegrationTest\Test.runsettings.template.json" "${{ parameters.source }}\Test.runsettings.json"
@@ -14,21 +23,11 @@ steps:
     # Install Winget
     $ProgressPreference = 'SilentlyContinue'
     iwr https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx -OutFile Microsoft.VCLibs.x64.14.00.Desktop.appx
-    iwr https://github.com/microsoft/winget-cli/releases/download/v1.1.12653/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -OutFile Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
-    iwr https://github.com/microsoft/winget-cli/releases/download/v1.1.12653/9c0fe2ce7f8e410eb4a8f417de74517e_License1.xml -OutFile license.xml
-    Add-AppxProvisionedPackage -Online -PackagePath .\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -DependencyPackagePath .\Microsoft.VCLibs.x64.14.00.Desktop.appx -LicensePath .\license.xml
+    # iwr https://github.com/microsoft/winget-cli/releases/download/v1.1.12653/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -OutFile Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
+    Add-AppxProvisionedPackage -Online -PackagePath "$(System.ArtifactsDirectory)\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" -DependencyPackagePath .\Microsoft.VCLibs.x64.14.00.Desktop.appx -SkipLicense
     Add-AppxPackage .\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
     winget source add -n "winget-pkgs-restsource" -a https://azfun-pkgsrest-api-centus-test.azurewebsites.net/api/ -t "Microsoft.Rest"
   displayName: "Setup test pre-requisites"
-
-- task: CopyFiles@2
-  displayName: 'Copy Files: ${{ parameters.name }}'
-  inputs:
-    SourceFolder: ${{ parameters.source }}
-    TargetFolder:  '$(build.artifactstagingdirectory)\${{ parameters.name }}'
-    CleanTargetFolder: true
-    OverWrite: true
-  condition: succeeded()
 
 - task: DotNetCoreCLI@2
   displayName: 'Run tests: ${{ parameters.name }}'
@@ -36,20 +35,7 @@ steps:
     command: 'test'
     projects: '$(Build.SourcesDirectory)\src\WinGet.RestSource.IntegrationTest\*.csproj'
   env:
-    RestSourceName: "winget-pkgs-restsource"
     RestSourceUrl: "https://azfun-pkgsrest-api-centus-test.azurewebsites.net/api/"
-
-- task: VSTest@2
-  displayName: 'Run tests: ${{ parameters.name }}'
-  inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: ${{ parameters.dll }}
-    searchFolder: '$(build.artifactstagingdirectory)\${{ parameters.name }}'
-    codeCoverageEnabled: true
-    platform: '$(BuildPlatform)'
-    configuration: '$(BuildConfiguration)'
-    # overrideTestrunParameters: '-CosmosAccountEndpoint "$(CosmosDbEmulator.Endpoint)"'
-  condition: succeeded()
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: WinGet.RestSource-${{ parameters.name }}'
