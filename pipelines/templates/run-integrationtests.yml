@@ -35,6 +35,9 @@ steps:
   inputs:
     command: 'test'
     projects: '$(Build.SourcesDirectory)\src\WinGet.RestSource.IntegrationTest\*.csproj'
+  env:
+    RestSourceName: "winget-pkgs-restsource"
+    RestSourceUrl: "https://localhost:7071/api"
 
 - task: VSTest@2
   displayName: 'Run tests: ${{ parameters.name }}'
