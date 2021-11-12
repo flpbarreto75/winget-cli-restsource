@@ -14,6 +14,7 @@ steps:
     # Launch Cosmos DB emulator
     Import-Module "$env:ProgramFiles\Azure Cosmos DB Emulator\PSModules\Microsoft.Azure.CosmosDB.Emulator"
     Start-CosmosDbEmulator
+    Write-Host "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
   displayName: "Setup test pre-requisites"
 
 - task: DotNetCoreCLI@2
@@ -23,8 +24,8 @@ steps:
     arguments: "--no-build -c Release"
     publishTestResults: true
     projects: '$(Build.SourcesDirectory)\src\WinGet.RestSource.UnitTest\*.csproj'
-  env:
-    CosmosAccountEndpoint: $(CosmosDbEmulator.Endpoint)
+  # env:
+  #   CosmosAccountEndpoint: "$(CosmosDbEmulator.Endpoint)"
 
 # - task: CopyFiles@2
 #   displayName: 'Copy Files: ${{ parameters.name }}'
