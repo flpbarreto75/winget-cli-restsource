@@ -38,13 +38,8 @@ steps:
   inputs:
     command: 'test'
     arguments: "--no-build -c Release"
+    publishTestResults: true
     projects: '$(Build.SourcesDirectory)\src\WinGet.RestSource.IntegrationTest\*.csproj'
   env:
     RestSourceUrl: "https://azfun-pkgsrest-api-centus-test.azurewebsites.net/api/"
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: WinGet.RestSource-${{ parameters.name }}'
-  condition: succeededOrFailed()
-  inputs:
-    PathtoPublish: '$(Agent.TempDirectory)\TestResults'
-    ArtifactName: 'WinGet.RestSource-${{ parameters.name }}'
+    
