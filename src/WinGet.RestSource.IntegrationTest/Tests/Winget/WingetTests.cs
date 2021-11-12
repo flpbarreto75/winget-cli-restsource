@@ -65,9 +65,8 @@ namespace Microsoft.WinGet.RestSource.IntegrationTest.Winget
         [Fact]
         public async Task WingetUpgrade()
         {
-            await this.TestWingetQuery("upgrade \"Windows Software Development Kit\"", output => output.Contains("No applicable update found."));
-            await this.TestWingetQuery("upgrade Microsoft.WindowsSDK", output => output.Contains("No applicable update found."));
-            await this.TestWingetQuery("upgrade \"Windows Software Development Kitten\"", output => output.Contains("No installed package found matching input criteria."));
+            await this.TestWingetQuery("upgrade Microsoft.PowerShell", output => output.Contains("No applicable update found."));
+            await this.TestWingetQuery("upgrade Microsoft.PowerShelllll", output => output.Contains("No installed package found matching input criteria."));
         }
 
         [Fact]
