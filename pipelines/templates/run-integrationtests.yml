@@ -37,7 +37,7 @@ steps:
     projects: '$(Build.SourcesDirectory)\src\WinGet.RestSource.IntegrationTest\*.csproj'
   env:
     RestSourceName: "winget-pkgs-restsource"
-    RestSourceUrl: "https://localhost:7071/api"
+    RestSourceUrl: "https://azfun-pkgsrest-api-centus-test.azurewebsites.net/api/"
 
 - task: VSTest@2
   displayName: 'Run tests: ${{ parameters.name }}'
