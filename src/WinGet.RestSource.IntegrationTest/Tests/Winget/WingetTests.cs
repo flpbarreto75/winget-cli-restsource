@@ -106,7 +106,7 @@ namespace Microsoft.WinGet.RestSource.IntegrationTest.Winget
             else
             {
                 var results = ParseWingetOutput(output);
-                var validators = expectedPackageIdentifiers.Select(id => (WingetApp app) => Assert.Equal(id, app.Id)).ToArray();
+                var validators = expectedPackageIdentifiers.Select(id => (Action<WingetApp>)((WingetApp app) => Assert.Equal(id, app.Id))).ToArray();
                 Assert.Collection(results, validators);
             }
         }
