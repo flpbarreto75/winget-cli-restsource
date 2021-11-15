@@ -10,7 +10,7 @@ steps:
 
 - script: |
     echo "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
-    echo $env:CosmosAccountEndpoint
+    echo %CosmosAccountEndpoint%
   displayName: Set CosmosAccountEndpoint environment variable
 
 # Checkout repo with lfs enabled
