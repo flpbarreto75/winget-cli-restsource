@@ -2,6 +2,17 @@
 
 steps:
 
+- powershell: |
+    # Launch Cosmos DB emulator
+    Import-Module "$env:ProgramFiles\Azure Cosmos DB Emulator\PSModules\Microsoft.Azure.CosmosDB.Emulator"
+    Start-CosmosDbEmulator
+  displayName: "Setup test pre-requisites"
+
+- script: |
+    Write-Host "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
+    echo $env:CosmosAccountEndpoint
+  displayName: Set CosmosAccountEndpoint environment variable
+
 # Checkout repo with lfs enabled
 - checkout: self
   lfs: "true"
