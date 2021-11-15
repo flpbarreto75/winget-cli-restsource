@@ -8,9 +8,9 @@ steps:
     Start-CosmosDbEmulator
   displayName: "Setup test pre-requisites"
 
-- script: |
-    echo "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
-    echo %CosmosAccountEndpoint%
+- powershell: |
+    Write-Host "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
+    echo $env:CosmosAccountEndpoint
   displayName: Set CosmosAccountEndpoint environment variable
 
 # Checkout repo with lfs enabled
