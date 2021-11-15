@@ -9,7 +9,7 @@ steps:
   displayName: "Setup test pre-requisites"
 
 - script: |
-    Write-Host "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
+    echo "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
     echo $env:CosmosAccountEndpoint
   displayName: Set CosmosAccountEndpoint environment variable
 
