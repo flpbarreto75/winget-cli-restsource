@@ -14,14 +14,14 @@ steps:
     # Launch Cosmos DB emulator
     Import-Module "$env:ProgramFiles\Azure Cosmos DB Emulator\PSModules\Microsoft.Azure.CosmosDB.Emulator"
     Start-CosmosDbEmulator
-    Write-Host "$(CosmosDbEmulator.Endpoint)"
-    Write-Host "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
+    # Write-Host "$(CosmosDbEmulator.Endpoint)"
+    # Write-Host "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
   displayName: "Setup test pre-requisites"
 
-- script: |
-    echo "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
-    echo %CosmosAccountEndpoint%
-  displayName: Set CosmosAccountEndpoint environment variable
+# - script: |
+#     echo "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
+#     echo %CosmosAccountEndpoint%
+#   displayName: Set CosmosAccountEndpoint environment variable
 
 - task: DotNetCoreCLI@2
   displayName: 'Run tests: ${{ parameters.name }}'
@@ -31,7 +31,7 @@ steps:
     publishTestResults: true
     projects: '$(Build.SourcesDirectory)\src\WinGet.RestSource.UnitTest\*.csproj'
   # env:
-  #   CosmosAccountEndpoint: "$(CosmosDbEmulator.Endpoint)"
+    # CosmosAccountEndpoint: "https://localhost:8081/_explorer/index.html"
 
 # - task: CopyFiles@2
 #   displayName: 'Copy Files: ${{ parameters.name }}'
