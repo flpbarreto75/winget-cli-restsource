@@ -14,14 +14,7 @@ steps:
     # Launch Cosmos DB emulator
     Import-Module "$env:ProgramFiles\Azure Cosmos DB Emulator\PSModules\Microsoft.Azure.CosmosDB.Emulator"
     Start-CosmosDbEmulator
-    # Write-Host "$(CosmosDbEmulator.Endpoint)"
-    # Write-Host "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
   displayName: "Setup test pre-requisites"
-
-# - script: |
-#     echo "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
-#     echo %CosmosAccountEndpoint%
-#   displayName: Set CosmosAccountEndpoint environment variable
 
 - task: DotNetCoreCLI@2
   displayName: 'Run tests: ${{ parameters.name }}'
@@ -30,33 +23,3 @@ steps:
     arguments: "--no-build -c Release"
     publishTestResults: true
     projects: '$(Build.SourcesDirectory)\src\WinGet.RestSource.UnitTest\*.csproj'
-  # env:
-    # CosmosAccountEndpoint: "https://localhost:8081/_explorer/index.html"
-
-# - task: CopyFiles@2
-#   displayName: 'Copy Files: ${{ parameters.name }}'
-#   inputs:
-#     SourceFolder: ${{ parameters.source }}
-#     TargetFolder:  '$(build.artifactstagingdirectory)\${{ parameters.name }}'
-#     CleanTargetFolder: true
-#     OverWrite: true
-#   condition: succeeded()
-
-# - task: VSTest@2
-#   displayName: 'Run tests: ${{ parameters.name }}'
-#   inputs:
-#     testSelector: 'testAssemblies'
-#     testAssemblyVer2: ${{ parameters.dll }}
-#     searchFolder: '$(build.artifactstagingdirectory)\${{ parameters.name }}'
-#     codeCoverageEnabled: true
-#     platform: '$(BuildPlatform)'
-#     configuration: '$(BuildConfiguration)'
-#     overrideTestrunParameters: '-CosmosAccountEndpoint "$(CosmosDbEmulator.Endpoint)"'
-#   condition: succeeded()
-
-# - task: PublishBuildArtifacts@1
-#   displayName: 'Publish Artifact: WinGet.RestSource-${{ parameters.name }}'
-#   condition: succeededOrFailed()
-#   inputs:
-#     PathtoPublish: '$(Agent.TempDirectory)\TestResults'
-#     ArtifactName: 'WinGet.RestSource-${{ parameters.name }}'

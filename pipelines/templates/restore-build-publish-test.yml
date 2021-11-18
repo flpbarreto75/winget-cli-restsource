@@ -2,17 +2,6 @@
 
 steps:
 
-# - powershell: |
-#     # Launch Cosmos DB emulator
-#     Import-Module "$env:ProgramFiles\Azure Cosmos DB Emulator\PSModules\Microsoft.Azure.CosmosDB.Emulator"
-#     Start-CosmosDbEmulator
-#   displayName: "Setup test pre-requisites"
-
-# - powershell: |
-#     Write-Host "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
-#     echo $env:CosmosAccountEndpoint
-#   displayName: Set CosmosAccountEndpoint environment variable
-
 # Checkout repo with lfs enabled
 - checkout: self
   lfs: "true"
@@ -53,19 +42,19 @@ steps:
 # Publish powershell
 - template: copy-and-publish-powershell.yml
 
-# ## Run Integration Tests
-# - template: run-integrationtests.yml
-#   parameters:
-#     name: WinGet.RestSource.IntegrationTest
-#     source: '$(Build.SourcesDirectory)\src\WinGet.RestSource.IntegrationTest\bin\$(BuildConfiguration)\netcoreapp5.0'
-#     dll: Microsoft.WinGet.RestSource.IntegrationTest.dll
-
 # Run Unit Tests
 - template: run-unittests.yml
   parameters:
     name: WinGet.RestSource.UnitTest
     source: '$(Build.SourcesDirectory)\src\WinGet.RestSource.UnitTest\bin\$(BuildConfiguration)\netcoreapp3.1'
     dll: Microsoft.WinGet.RestSource.UnitTest.dll
+
+## Run Integration Tests
+- template: run-integrationtests.yml
+  parameters:
+    name: WinGet.RestSource.IntegrationTest
+    source: '$(Build.SourcesDirectory)\src\WinGet.RestSource.IntegrationTest\bin\$(BuildConfiguration)\netcoreapp5.0'
+    dll: Microsoft.WinGet.RestSource.IntegrationTest.dll
 
 ## Component Governance
 - task: ComponentGovernanceComponentDetection@0
