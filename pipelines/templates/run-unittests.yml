@@ -14,11 +14,13 @@ steps:
     # Launch Cosmos DB emulator
     Import-Module "$env:ProgramFiles\Azure Cosmos DB Emulator\PSModules\Microsoft.Azure.CosmosDB.Emulator"
     Start-CosmosDbEmulator
+    $(CosmosDbEmulator.Endpoint)
+    Write-Host "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
   displayName: "Setup test pre-requisites"
 
-- powershell: |
-    Write-Host "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
-    echo $env:CosmosAccountEndpoint
+- script: |
+    echo "##vso[task.setvariable variable=CosmosAccountEndpoint;]$(CosmosDbEmulator.Endpoint)"
+    echo %CosmosAccountEndpoint%
   displayName: Set CosmosAccountEndpoint environment variable
 
 - task: DotNetCoreCLI@2
