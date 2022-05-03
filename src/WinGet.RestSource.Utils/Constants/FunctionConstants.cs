@@ -140,5 +140,50 @@ namespace Microsoft.WinGet.RestSource.Utils.Constants
         /// Information Get Function Name.
         /// </summary>
         public const string InformationGet = "InformationGet";
+
+        /// <summary>
+        /// Rebuild Post Function Name.
+        /// </summary>
+        public const string RebuildPost = "RebuildPost";
+
+        /// <summary>
+        /// Rebuild Orchestrator Function Name.
+        /// </summary>
+        public const string RebuildOrchestrator = "RebuildOrchestrator";
+
+        /// <summary>
+        /// Rebuild Activity Function Name.
+        /// </summary>
+        public const string RebuildActivity = "RebuildActivity";
+
+        /// <summary>
+        /// Update Post Function Name.
+        /// </summary>
+        public const string UpdatePost = "UpdatePost";
+
+        /// <summary>
+        /// Update Orchestrator Function Name.
+        /// </summary>
+        public const string UpdateOrchestrator = "UpdateOrchestrator";
+
+        /// <summary>
+        /// Update Activity Function Name.
+        /// </summary>
+        public const string UpdateActivity = "UpdateActivity";
+
+        /// <summary>
+        /// Exists Post Function Name.
+        /// </summary>
+        public const string ExistsPost = "ExistsPost";
+
+        /// <summary>
+        /// Exists Orchestrator Function Name.
+        /// </summary>
+        public const string ExistsOrchestrator = "ExistsOrchestrator";
+
+        /// <summary>
+        /// Exists Activity Function Name.
+        /// </summary>
+        public const string ExistsActivity = "ExistsActivity";
     }
 }

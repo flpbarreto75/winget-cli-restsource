@@ -29,6 +29,38 @@ namespace Microsoft.WinGet.RestSource.Utils.Constants
         };
 
         /// <summary>
+        /// Gets manifest cache endpoint.
+        /// </summary>
+        public static readonly string ManifestCacheEndpoint = Environment.GetEnvironmentVariable("ManifestCacheEndpoint");
+
+        /// <summary>
+        /// Functions host key.
+        /// </summary>
+        public static readonly string AzureFunctionHostKey = Environment.GetEnvironmentVariable("FunctionHostKey");
+
+        /// <summary>
+        /// PackageManifests endpoint.
+        /// </summary>
+        public static readonly string AzFuncPackageManifestsEndpoint = Environment.GetEnvironmentVariable("AzFuncPackageManifestsEndpoint");
+
+        /// <summary>
+        /// Gets the GitHub token used for Github's GraphQL connection.
+        /// Typically, this will be the wingetva account.
+        /// </summary>
+        public static readonly string GitHubServiceAccountToken = Environment.GetEnvironmentVariable("GitHub_ServiceAccountToken");
+
+        /// <summary>
+        /// Gets the GitHub repository that this azure functions should be dealing with.
+        /// </summary>
+        public static readonly string GitHubRepository = Environment.GetEnvironmentVariable("GitHub_Repository");
+
+        /// <summary>
+        /// Github commit status removed.
+        /// </summary>
+        public static readonly string GitHubStatusRemoved = "removed";
+
+        /// <summary>
+        /// Server Supported Versions.
         /// Unsupported package match fields.
         /// TODO: NormalizedPackageNameAndPublisher field support is currently not implemented.
         /// GitHub Issue: https://github.com/microsoft/winget-cli-restsource/issues/59.

@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>WinGet.Exists.Core.xml</DocumentationFile>
+    <!-- Warning 1701;1702: These two compiler warnings are raised when a reference is bound to a different version 
+         than specified in the assembly reference version number. -->
+    <!-- Warning NU1701: Warning for using Nuget packages in a .Net Core project compiled in .Net Framework. -->
+    <NoWarn>1701;1702;NU1701</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.OWCUtil" Version="0.0.2.26-pre" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+    <ItemGroup>
+    <!-- Component Governance fix Item Group. -->
+    <!-- Remove when dependency resolving correctly picks up security fixed version-->
+    <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WinGet.RestSource.Utils\WinGet.RestSource.Utils.csproj" />
+  </ItemGroup>
+
+</Project>

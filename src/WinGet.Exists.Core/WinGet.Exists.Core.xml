@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WinGet.Exists.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.WinGet.Exists.Core.Exists">
+            <summary>
+            Class that contains exists operations.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WinGet.Exists.Core.Exists.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.WinGet.Exists.Core.Exists"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WinGet.Exists.Core.Exists.ProcessExistsRequestAsync(System.Net.Http.HttpClient,System.String,Microsoft.WinGet.RestSource.Utils.ToMoveToUtils.ExistsType,System.String,Microsoft.OWCUtils.Diagnostics.LoggingContext)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.WinGet.Exists.Core.ExistsFactory">
+            <summary>
+            Helps initialize the Existence checker.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WinGet.Exists.Core.ExistsFactory.InitializeExistsInstance">
+            <summary>
+            Factory method to initialize existence checker.
+            </summary>
+            <returns>An instance of <see cref="T:Microsoft.WinGet.Exists.Core.Exists"/>.</returns>
+        </member>
+        <member name="T:Microsoft.WinGet.Exists.Core.IExists">
+            <summary>
+            Exists interface.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WinGet.Exists.Core.IExists.ProcessExistsRequestAsync(System.Net.Http.HttpClient,System.String,Microsoft.WinGet.RestSource.Utils.ToMoveToUtils.ExistsType,System.String,Microsoft.OWCUtils.Diagnostics.LoggingContext)">
+            <summary>
+            Processes an exists request.
+            </summary>
+            <param name="httpClient">http client.</param>
+            <param name="operationId">Operation id.</param>
+            <param name="type">field to check.</param>
+            <param name="value">value to check for.</param>
+            <param name="loggingContext">Logging context.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+    </members>
+</doc>

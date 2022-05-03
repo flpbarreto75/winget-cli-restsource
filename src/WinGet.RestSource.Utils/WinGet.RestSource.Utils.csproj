@@ -43,6 +43,14 @@
     </PackageReference>
     <PackageReference Include="Microsoft.WindowsPackageManager.Utils" Version="0.3.4" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.12" />
+    <PackageReference Include="Microsoft.OWCUtil" Version="0.0.2.26-pre" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.Utils" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Component Governance fix Item Group. -->
+    <!-- Remove when dependency resolving correctly picks up security fixed version-->
+    <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
   </ItemGroup>
 
 </Project>

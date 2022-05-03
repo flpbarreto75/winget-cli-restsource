@@ -24,6 +24,14 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+    </ItemGroup>
+
   <ItemGroup>
     <!-- Component Governance fix. Remove when dependency resolving correctly picks up new version, most likely when updating to dotnet 5.0 -->
     <PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />
@@ -31,14 +39,16 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.13" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.12" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.CosmosDB" Version="3.0.10" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.DurableTask" Version="2.4.2" />
+    <PackageReference Include="Microsoft.OWCUtil" Version="0.0.2.26-pre" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.Utils" Version="*" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+    <!-- Component Governance fix Item Group. -->
+    <!-- Remove when dependency resolving correctly picks up security fixed version-->
+    <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +66,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WinGet.RestSource\WinGet.RestSource.csproj" />
+      <ProjectReference Include="..\WinGet.Exists.Core\WinGet.Exists.Core.csproj" />
+      <ProjectReference Include="..\WinGet.Rebuild.Core\WinGet.Rebuild.Core.csproj" />
+      <ProjectReference Include="..\WinGet.RestSource\WinGet.RestSource.csproj" />
+      <ProjectReference Include="..\WinGet.Update.Core\WinGet.Update.Core.csproj" />
   </ItemGroup>
 </Project>

@@ -27,7 +27,6 @@ namespace Microsoft.WinGet.RestSource.Functions
     /// <summary>
     /// This class contains the functions for interacting with versions.
     /// </summary>
-    /// TODO: Refactor duplicate code to library.
     public class VersionFunctions
     {
         private readonly IApiDataStore dataStore;
@@ -56,11 +55,13 @@ namespace Microsoft.WinGet.RestSource.Functions
             string packageIdentifier,
             ILogger log)
         {
-            Version version;
+            Version version = null;
+            Dictionary<string, string> headers = null;
+
             try
             {
                 // Parse Headers
-                Dictionary<string, string> headers = HeaderProcessor.ToDictionary(req.Headers);
+                headers = HeaderProcessor.ToDictionary(req.Headers);
 
                 // Parse body as Version
                 version = await Parser.StreamParser<Version>(req.Body, log);
@@ -77,6 +78,14 @@ namespace Microsoft.WinGet.RestSource.Functions
             catch (Exception e)
             {
                 log.LogError(e.ToString());
+                Geneva.Metrics.EmitMetricForOperation(
+                    Geneva.ErrorMetrics.ServerInformationError,
+                    FunctionConstants.VersionPost,
+                    req.Path.Value,
+                    headers,
+                    version,
+                    e,
+                    log);
                 return ActionResultHelper.UnhandledError(e);
             }
 
@@ -100,10 +109,12 @@ namespace Microsoft.WinGet.RestSource.Functions
             string packageVersion,
             ILogger log)
         {
+            Dictionary<string, string> headers = null;
+
             try
             {
                 // Parse Headers
-                Dictionary<string, string> headers = HeaderProcessor.ToDictionary(req.Headers);
+                headers = HeaderProcessor.ToDictionary(req.Headers);
                 await this.dataStore.DeleteVersion(packageIdentifier, packageVersion);
             }
             catch (DefaultException e)
@@ -114,6 +125,13 @@ namespace Microsoft.WinGet.RestSource.Functions
             catch (Exception e)
             {
                 log.LogError(e.ToString());
+                Geneva.Metrics.EmitMetricForOperation(
+                    Geneva.ErrorMetrics.ServerInformationError,
+                    FunctionConstants.VersionDelete,
+                    req.Path.Value,
+                    headers,
+                    e,
+                    log);
                 return ActionResultHelper.UnhandledError(e);
             }
 
@@ -137,11 +155,13 @@ namespace Microsoft.WinGet.RestSource.Functions
             string packageVersion,
             ILogger log)
         {
-            Version version;
+            Version version = null;
+            Dictionary<string, string> headers = null;
+
             try
             {
                 // Parse Headers
-                Dictionary<string, string> headers = HeaderProcessor.ToDictionary(req.Headers);
+                headers = HeaderProcessor.ToDictionary(req.Headers);
 
                 // Parse body as Version
                 version = await Parser.StreamParser<Version>(req.Body, log);
@@ -166,6 +186,14 @@ namespace Microsoft.WinGet.RestSource.Functions
             catch (Exception e)
             {
                 log.LogError(e.ToString());
+                Geneva.Metrics.EmitMetricForOperation(
+                    Geneva.ErrorMetrics.ServerInformationError,
+                    FunctionConstants.VersionPut,
+                    req.Path.Value,
+                    headers,
+                    version,
+                    e,
+                    log);
                 return ActionResultHelper.UnhandledError(e);
             }
 
@@ -190,11 +218,12 @@ namespace Microsoft.WinGet.RestSource.Functions
             ILogger log)
         {
             ApiDataPage<Version> versions;
+            Dictionary<string, string> headers = null;
 
             try
             {
                 // Parse Headers
-                Dictionary<string, string> headers = HeaderProcessor.ToDictionary(req.Headers);
+                headers = HeaderProcessor.ToDictionary(req.Headers);
 
                 versions = await this.dataStore.GetVersions(packageIdentifier, packageVersion);
             }
@@ -206,6 +235,13 @@ namespace Microsoft.WinGet.RestSource.Functions
             catch (Exception e)
             {
                 log.LogError(e.ToString());
+                Geneva.Metrics.EmitMetricForOperation(
+                    Geneva.ErrorMetrics.ServerInformationError,
+                    FunctionConstants.VersionGet,
+                    req.Path.Value,
+                    headers,
+                    e,
+                    log);
                 return ActionResultHelper.UnhandledError(e);
             }
 

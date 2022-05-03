@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WinGet.Update.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.WinGet.Update.Core.IUpdate">
+            <summary>
+            Update interface.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WinGet.Update.Core.IUpdate.ProcessUpdateRequestAsync(System.Net.Http.HttpClient,System.String,System.Collections.Generic.List{System.String},Microsoft.OWCUtils.Diagnostics.LoggingContext)">
+            <summary>
+            Processes an update request.
+            </summary>
+            <param name="httpClient">The Function's http client.</param>
+            <param name="operationId">Operation id.</param>
+            <param name="commits">List of commits to process.</param>
+            <param name="loggingContext">Logging context.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="T:Microsoft.WinGet.Update.Core.Update">
+            <summary>
+            Class that contains update operations.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WinGet.Update.Core.Update.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.WinGet.Update.Core.Update"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WinGet.Update.Core.Update.ProcessUpdateRequestAsync(System.Net.Http.HttpClient,System.String,System.Collections.Generic.List{System.String},Microsoft.OWCUtils.Diagnostics.LoggingContext)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.WinGet.Update.Core.UpdateFactory">
+            <summary>
+            Helps initialize the updater.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WinGet.Update.Core.UpdateFactory.InitializeUpdateInstance">
+            <summary>
+            Factory method to initialize update object.
+            </summary>
+            <returns>An instance of <see cref="T:Microsoft.WinGet.Update.Core.Update"/>.</returns>
+        </member>
+    </members>
+</doc>

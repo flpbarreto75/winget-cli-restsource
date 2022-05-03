@@ -17,7 +17,7 @@
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DebugType>full</DebugType>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -29,6 +29,8 @@
     <PackageReference Include="Flurl.Http" Version="3.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+	 <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+	 <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.354">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -46,16 +48,46 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WinGet.RestSource.Utils\WinGet.RestSource.Utils.csproj" />
+    <!-- Component Governance fix Item Group. -->
+    <!-- Remove when dependency resolving correctly picks up security fixed version-->
+    <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Test.runsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    <ProjectReference Include="..\WinGet.RestSource.Utils\WinGet.RestSource.Utils.csproj" />
+    <ProjectReference Include="..\WinGet.RestSource\WinGet.RestSource.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestCollateral\Manifests\azure-cli-search.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Test.runsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="TestCollateral\Manifests\code-lite-search.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestCollateral\Manifests\fake-manifest-placeholder.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestCollateral\Manifests\powertoys-search.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestCollateral\Manifests\powertoys.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestCollateral\Manifests\vs-code-search.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestCollateral\RequestFiles\match-type-non-existent.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestCollateral\RequestFiles\match-type-exact.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestCollateral\RequestFiles\match-type-startswith.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestCollateral\RequestFiles\match-type-substring.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WinGet.Rebuild.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.WinGet.Rebuild.Core.IRebuild">
+            <summary>
+            Rebuild interface.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WinGet.Rebuild.Core.IRebuild.ProcessRebuildRequestAsync(System.Net.Http.HttpClient,System.String,System.String,Microsoft.WinGet.RestSource.Utils.ToMoveToUtils.ReferenceType,Microsoft.OWCUtils.Diagnostics.LoggingContext)">
+            <summary>
+            Processes a rebuild request.
+            </summary>
+            <param name="httpClient">The function's http client.</param>
+            <param name="operationId">Operation id.</param>
+            <param name="sasReference">SAS reference to SQLite file.</param>
+            <param name="type">type of operation performed on the SQLite file.</param>
+            <param name="loggingContext">Logging context.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="T:Microsoft.WinGet.Rebuild.Core.Rebuild">
+            <summary>
+            Class that contains rebuild operations.
+            Rebuild reconstructs the rest source backend data to align with the provided sqlite index file.
+            These are relatively expensive operation that should be used sparingly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WinGet.Rebuild.Core.Rebuild.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.WinGet.Rebuild.Core.Rebuild"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WinGet.Rebuild.Core.Rebuild.ProcessRebuildRequestAsync(System.Net.Http.HttpClient,System.String,System.String,Microsoft.WinGet.RestSource.Utils.ToMoveToUtils.ReferenceType,Microsoft.OWCUtils.Diagnostics.LoggingContext)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.WinGet.Rebuild.Core.RebuildFactory">
+            <summary>
+            Helps initialize the rebuilder.
+            </summary>
+        </member>
+        <member name="M:Microsoft.WinGet.Rebuild.Core.RebuildFactory.InitializeRebuildInstance">
+            <summary>
+            Factory method to initialize rebuild object.
+            </summary>
+            <returns>An instance of <see cref="T:Microsoft.WinGet.Rebuild.Core.Rebuild"/>.</returns>
+        </member>
+    </members>
+</doc>

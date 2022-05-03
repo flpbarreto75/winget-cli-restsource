@@ -60,11 +60,12 @@ namespace Microsoft.WinGet.RestSource.Functions
             string packageVersion,
             ILogger log)
         {
-            Installer installer;
+            Installer installer = null;
+            Dictionary<string, string> headers = null;
             try
             {
                 // Parse Headers
-                Dictionary<string, string> headers = HeaderProcessor.ToDictionary(req.Headers);
+                headers = HeaderProcessor.ToDictionary(req.Headers);
 
                 // Parse body as installer
                 installer = await Parser.StreamParser<Installer>(req.Body, log);
@@ -80,6 +81,14 @@ namespace Microsoft.WinGet.RestSource.Functions
             catch (Exception e)
             {
                 log.LogError(e.ToString());
+                Geneva.Metrics.EmitMetricForOperation(
+                    Geneva.ErrorMetrics.DatabaseUpdateError,
+                    FunctionConstants.InstallerPost,
+                    req.Path.Value,
+                    headers,
+                    installer,
+                    e,
+                    log);
                 return ActionResultHelper.UnhandledError(e);
             }
 
@@ -108,10 +117,12 @@ namespace Microsoft.WinGet.RestSource.Functions
             string installerIdentifier,
             ILogger log)
         {
+            Dictionary<string, string> headers = null;
+
             try
             {
                 // Parse Headers
-                Dictionary<string, string> headers = HeaderProcessor.ToDictionary(req.Headers);
+                headers = HeaderProcessor.ToDictionary(req.Headers);
                 await this.dataStore.DeleteInstaller(packageIdentifier, packageVersion, installerIdentifier);
             }
             catch (DefaultException e)
@@ -122,6 +133,13 @@ namespace Microsoft.WinGet.RestSource.Functions
             catch (Exception e)
             {
                 log.LogError(e.ToString());
+                Geneva.Metrics.EmitMetricForOperation(
+                    Geneva.ErrorMetrics.DatabaseUpdateError,
+                    FunctionConstants.InstallerDelete,
+                    req.Path.Value,
+                    headers,
+                    e,
+                    log);
                 return ActionResultHelper.UnhandledError(e);
             }
 
@@ -150,11 +168,13 @@ namespace Microsoft.WinGet.RestSource.Functions
             string installerIdentifier,
             ILogger log)
         {
-            Installer installer;
+            Installer installer = null;
+            Dictionary<string, string> headers = null;
+
             try
             {
                 // Parse Headers
-                Dictionary<string, string> headers = HeaderProcessor.ToDictionary(req.Headers);
+                headers = HeaderProcessor.ToDictionary(req.Headers);
 
                 // Parse body as package
                 installer = await Parser.StreamParser<Installer>(req.Body, log);
@@ -178,6 +198,14 @@ namespace Microsoft.WinGet.RestSource.Functions
             catch (Exception e)
             {
                 log.LogError(e.ToString());
+                Geneva.Metrics.EmitMetricForOperation(
+                    Geneva.ErrorMetrics.DatabaseUpdateError,
+                    FunctionConstants.InstallerPut,
+                    req.Path.Value,
+                    headers,
+                    installer,
+                    e,
+                    log);
                 return ActionResultHelper.UnhandledError(e);
             }
 
@@ -207,11 +235,12 @@ namespace Microsoft.WinGet.RestSource.Functions
             ILogger log)
         {
             ApiDataPage<Installer> installers;
+            Dictionary<string, string> headers = null;
 
             try
             {
                 // Parse Headers
-                Dictionary<string, string> headers = HeaderProcessor.ToDictionary(req.Headers);
+                headers = HeaderProcessor.ToDictionary(req.Headers);
 
                 installers = await this.dataStore.GetInstallers(packageIdentifier, packageVersion, installerIdentifier);
             }
@@ -223,6 +252,13 @@ namespace Microsoft.WinGet.RestSource.Functions
             catch (Exception e)
             {
                 log.LogError(e.ToString());
+                Geneva.Metrics.EmitMetricForOperation(
+                    Geneva.ErrorMetrics.DatabaseGetError,
+                    FunctionConstants.InstallerGet,
+                    req.Path.Value,
+                    headers,
+                    e,
+                    log);
                 return ActionResultHelper.UnhandledError(e);
             }
 
